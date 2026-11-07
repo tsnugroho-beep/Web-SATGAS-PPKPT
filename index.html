@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Satgas PPKPT - Universitas Pelita Bangsa</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg">
+
+  <!-- Meta Tags -->
+  <meta name="description"
+    content="Portal Resmi Satuan Tugas Pencegahan dan Penanganan Kekerasan di Lingkungan Perguruan Tinggi (PPKPT) Universitas Pelita Bangsa.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: {
+              50: '#F4F7F5',
+              100: '#EAF0EC',
+              200: '#D8E2DC',
+              300: '#C4D3C8',
+              400: '#A3B8A8',
+              500: '#6B8E73',
+              600: '#52745A',
+              700: '#4A6B53',
+              800: '#364E3E',
+              900: '#2B3D31',
+            },
+            accent: {
+              gold: '#C29B38',
+              red: '#DC2626',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet (with cache-bust parameter) -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
+
+  <style>
+    /* Direct override to guarantee 100% symmetric, centered & clean nav chip */
+    #main-nav-container {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.65rem !important;
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+    }
+
+    #main-nav-container .nav-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0.5rem 1.15rem !important;
+      border-radius: 0.75rem !important;
+      color: #4B5563 !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      line-height: 1.25rem !important;
+      text-align: center !important;
+      border: 1px solid transparent !important;
+      background-color: transparent !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+    }
+
+    #main-nav-container .nav-link:hover {
+      color: #2B3D31 !important;
+      background-color: rgba(234, 240, 236, 0.5) !important;
+    }
+
+    #main-nav-container .nav-link.active {
+      color: #2B3D31 !important;
+      font-weight: 700 !important;
+      background-color: #EAF0EC !important;
+      border: 1px solid #C4D3C8 !important;
+      box-shadow: 0 1px 2px rgba(43, 61, 49, 0.05) !important;
+    }
+  </style>
+</head>
+
+<body class="text-gray-800 flex flex-col min-h-screen antialiased relative">
+
+  <!-- =========================================================================
+       BACKGROUND BEAMS (MODERN, CALMING & SLEEK LIGHT-RAYS)
+       ========================================================================= -->
+  <div class="background-beams-container" aria-hidden="true">
+    <!-- Faint atmospheric ambient glow at top center -->
+    <div class="beams-ambient-glow"></div>
+
+    <!-- Background Beams SVG Vector System -->
+    <svg class="beams-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice"
+      xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Beam Gradients with Sage Green & Subtle Gold Highlights -->
+        <linearGradient id="beamGradSage1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4A6B53" stop-opacity="0" />
+          <stop offset="50%" stop-color="#6B8E73" stop-opacity="0.85" />
+          <stop offset="85%" stop-color="#4A6B53" stop-opacity="1" />
+          <stop offset="100%" stop-color="#2B3D31" stop-opacity="0" />
+        </linearGradient>
+
+        <linearGradient id="beamGradSage2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#6B8E73" stop-opacity="0" />
+          <stop offset="55%" stop-color="#4A6B53" stop-opacity="0.9" />
+          <stop offset="85%" stop-color="#88B495" stop-opacity="1" />
+          <stop offset="100%" stop-color="#4A6B53" stop-opacity="0" />
+        </linearGradient>
+
+        <linearGradient id="beamGradGold" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C29B38" stop-opacity="0" />
+          <stop offset="55%" stop-color="#D4AF37" stop-opacity="0.8" />
+          <stop offset="85%" stop-color="#E5C158" stop-opacity="1" />
+          <stop offset="100%" stop-color="#C29B38" stop-opacity="0" />
+        </linearGradient>
+
+        <filter id="beamGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3.5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- Static Track Lines (Faint Guide Paths) -->
+      <g class="beam-tracks" stroke="#D8E2DC" stroke-width="1" stroke-opacity="0.55">
+        <path d="M -120 80 C 280 160, 560 60, 1560 380" />
+        <path d="M -60 260 C 380 120, 780 540, 1560 220" />
+        <path d="M 120 -80 C 320 380, 860 180, 1520 680" />
+        <path d="M -80 480 C 460 320, 740 760, 1560 580" />
+        <path d="M 280 -100 C 480 320, 880 480, 1420 980" />
+        <path d="M 580 -100 C 720 280, 1020 540, 1580 880" />
+        <path d="M -100 680 C 420 580, 920 820, 1560 760" />
+      </g>
+
+      <!-- Animated Traveling Beams (Smooth Glowing Beams of Light) -->
+      <g class="animated-beams">
+        <path class="traveling-beam beam-1" d="M -120 80 C 280 160, 560 60, 1560 380" stroke="url(#beamGradSage1)"
+          stroke-width="2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-2" d="M -60 260 C 380 120, 780 540, 1560 220" stroke="url(#beamGradSage2)"
+          stroke-width="2.2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-3" d="M 120 -80 C 320 380, 860 180, 1520 680" stroke="url(#beamGradGold)"
+          stroke-width="2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-4" d="M -80 480 C 460 320, 740 760, 1560 580" stroke="url(#beamGradSage1)"
+          stroke-width="2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-5" d="M 280 -100 C 480 320, 880 480, 1420 980" stroke="url(#beamGradSage2)"
+          stroke-width="2.2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-6" d="M 580 -100 C 720 280, 1020 540, 1580 880" stroke="url(#beamGradGold)"
+          stroke-width="2" filter="url(#beamGlow)" />
+        <path class="traveling-beam beam-7" d="M -100 680 C 420 580, 920 820, 1560 760" stroke="url(#beamGradSage1)"
+          stroke-width="2" filter="url(#beamGlow)" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- =========================================================================
+       1. HEADER (RAPAT, BERSIH & PRESISI)
+       ========================================================================= -->
+  <header class="site-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Logo & Brand Lockup (Sejajar Sempurna) -->
+        <a href="#beranda" class="brand-link flex items-center gap-3 group no-underline">
+          <div
+            class="w-12 h-12 rounded-xl bg-white p-1 border border-sage-200 shadow-sm flex items-center justify-center flex-shrink-0 group-hover:border-sage-400 transition-colors">
+            <img src="assets/images/logo.jpg" alt="Logo Satgas PPKPT" class="w-full h-full object-contain">
+          </div>
+          <div class="flex flex-col justify-center">
+            <div class="flex items-center gap-1.5 leading-none mb-1">
+              <span class="text-xs sm:text-sm font-extrabold text-accent-gold uppercase tracking-wider">SATGAS</span>
+              <span class="text-xs sm:text-sm font-black text-sage-900 tracking-wider">PPKPT</span>
+            </div>
+            <span class="text-sm sm:text-base font-bold text-sage-900 leading-none">
+              Universitas Pelita Bangsa
+            </span>
+          </div>
+        </a>
+
+        <!-- Visible Navigation Menu (Simetris, Presisi & Rapi) -->
+        <nav id="main-nav-container"
+          class="relative hidden md:flex items-center gap-3 text-sm font-semibold text-gray-700">
+          <a href="#beranda" class="nav-link active">Beranda</a>
+          <a href="#profil" class="nav-link">Profil</a>
+          <a href="#edukasi-kegiatan" class="nav-link">Edukasi dan Kegiatan</a>
+        </nav>
+
+        <!-- Action Area: Laporkan Dulu, Baru Menu -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Button "Laporkan!" (Merah Soft) -->
+          <button type="button"
+            class="js-open-report-modal btn-report-red inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow transition-all">
+            <svg class="w-4 h-4 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Laporkan!
+          </button>
+
+          <!-- Burger Menu Button (Hanya Garis Tiga / Hamburger Icon) -->
+          <div class="relative">
+            <button id="burger-dropdown-btn" type="button"
+              class="w-10 h-10 rounded-xl border border-sage-300 bg-white hover:bg-sage-50 text-gray-700 hover:text-sage-900 transition-colors shadow-sm flex items-center justify-center focus:outline-none"
+              aria-label="Menu" title="Menu">
+              <svg class="w-5 h-5 text-sage-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Panel: Responsive Menu -->
+            <div id="burger-dropdown-panel"
+              class="hidden absolute right-0 mt-2 w-60 sm:w-64 bg-white rounded-2xl shadow-xl border border-sage-200 py-2 z-50">
+
+              <!-- Tampil Hanya di Layar Mobile (< md) -->
+              <div class="md:hidden pb-1 mb-1 border-b border-gray-100">
+                <div class="px-4 py-1 text-[10px] font-bold text-sage-600 uppercase tracking-wider">
+                  Navigasi Utama
+                </div>
+                <a href="#beranda"
+                  class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                  <span class="text-base">🏠</span> Beranda
+                </a>
+                <a href="#profil"
+                  class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                  <span class="text-base">👥</span> Profil
+                </a>
+                <a href="#edukasi-kegiatan"
+                  class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                  <span class="text-base">📚</span> Edukasi dan Kegiatan
+                </a>
+              </div>
+
+              <!-- Menu Tambahan (Selalu Tampil) -->
+              <div class="px-4 py-1 text-[10px] font-bold text-sage-600 uppercase tracking-wider">
+                Layanan &amp; Informasi
+              </div>
+              <a href="#informasi-layanan"
+                class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                <span class="text-base">ℹ️</span> Informasi dan Layanan
+              </a>
+              <a href="#kontak"
+                class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                <span class="text-base">📞</span> Kontak
+              </a>
+              <a href="#faq"
+                class="nav-link block px-4 py-2 text-xs sm:text-sm font-medium text-gray-800 hover:bg-sage-50 hover:text-sage-800 transition-colors flex items-center gap-2.5">
+                <span class="text-base">❓</span> FAQ
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER (MODULAR SECTION VIEW: SATU SECTION PER TAMPILAN)
+       ========================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+    <!-- =====================================================================
+         SECTION 1: BERANDA
+         - Overview
+         - Button Laporkan
+         ===================================================================== -->
+    <section id="beranda" class="page-section active-page">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="space-y-4">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-sage-900 tracking-tight leading-tight">
+            Wujudkan Kampus Aman, Nyaman &amp; Bebas Kekerasan.
+          </h1>
+
+          <p class="text-base text-gray-700 leading-relaxed max-w-2xl">
+            Satuan Tugas Pencegahan dan Penanganan Kekerasan di Lingkungan Perguruan Tinggi (PPKPT) Universitas Pelita
+            Bangsa hadir untuk menjamin ruang aman, pendampingan berkeadilan, dan penindakan tegas demi martabat sivitas
+            akademika.
+          </p>
+        </div>
+
+        <!-- Bentuk-Bentuk Kekerasan yang Dilarang (Satu Kartu Besar Terpadu) -->
+        <div class="sage-card p-6 sm:p-8 bg-white/95 backdrop-blur-sm rounded-3xl border border-sage-200 shadow-sm space-y-6">
+          <div class="border-b border-sage-100 pb-4">
+            <div class="flex items-center gap-2.5 mb-1.5">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-sage-100 text-sage-800 text-base">🛡️</span>
+              <h3 class="text-lg sm:text-xl font-bold text-sage-900">Bentuk Kekerasan yang Dilarang</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-500">Kenali 4 kategori tindakan kekerasan di lingkungan kampus sesuai regulasi resmi Kemendikbudristek.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <!-- 1. Kekerasan Seksual -->
+            <div class="border-l-4 border-l-red-500 pl-4 py-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-lg">⚠️</span>
+                  <h4 class="text-sm sm:text-base font-bold text-sage-900">Kekerasan Seksual</h4>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mb-3">
+                  Setiap perbuatan merendahkan, menghina, melecehkan, atau menyerang tubuh/seksualitas seseorang karena ketimpangan relasi kuasa atau gender.
+                </p>
+              </div>
+              <ul class="text-xs text-gray-600 space-y-1.5 list-disc pl-4">
+                <li>Pelecehan fisik (sentuhan tanpa persetujuan).</li>
+                <li>Pelecehan verbal (catcalling, gurauan seksis).</li>
+                <li>Kekerasan Berbasis Gender Online / KBGO (penyebaran foto/pesan tanpa izin).</li>
+                <li>Eksploitasi seksual dan pemaksaan dalam relasi akademik.</li>
+              </ul>
+            </div>
+
+            <!-- 2. Perundungan / Bullying -->
+            <div class="border-l-4 border-l-amber-500 pl-4 py-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-lg">🛑</span>
+                  <h4 class="text-sm sm:text-base font-bold text-sage-900">Perundungan (Bullying)</h4>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mb-3">
+                  Kekerasan fisik maupun psikologis yang berulang atau berpotensi berulang oleh satu pihak atau kelompok yang memiliki kekuasaan lebih.
+                </p>
+              </div>
+              <ul class="text-xs text-gray-600 space-y-1.5 list-disc pl-4">
+                <li>Pengucilan sosial atau penghasutan untuk memusuhi korban.</li>
+                <li>Perpeloncoan liar berkedok ospek atau senioritas.</li>
+                <li>Cyberbullying (fitnah dan pencemaran nama baik di grup medsos).</li>
+                <li>Intimidasi akademik dan pemerasan tugas.</li>
+              </ul>
+            </div>
+
+            <!-- 3. Tindakan Intoleransi -->
+            <div class="border-l-4 border-l-blue-500 pl-4 py-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-lg">⚖️</span>
+                  <h4 class="text-sm sm:text-base font-bold text-sage-900">Tindakan Intoleransi</h4>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mb-3">
+                  Setiap perbuatan atau ucapan yang membeda-bedakan, mengecualikan, atau mendiskriminasi berdasarkan SARA atau latar belakang sosial.
+                </p>
+              </div>
+              <ul class="text-xs text-gray-600 space-y-1.5 list-disc pl-4">
+                <li>Ujaran kebencian (hate speech) berlatar suku atau agama.</li>
+                <li>Pelarangan atau pembatasan beribadah dan berekspresi.</li>
+                <li>Pemaksaan keyakinan atau atribut tertentu secara sepihak.</li>
+                <li>Diskriminasi terhadap penyandang disabilitas.</li>
+              </ul>
+            </div>
+
+            <!-- 4. Kekerasan Fisik & Psikis -->
+            <div class="border-l-4 border-l-purple-500 pl-4 py-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-lg">🛡️</span>
+                  <h4 class="text-sm sm:text-base font-bold text-sage-900">Kekerasan Fisik &amp; Psikis</h4>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mb-3">
+                  Tindakan yang mencederai keutuhan jasmani atau menimbulkan tekanan mental, ketakutan mendalam, dan trauma psikologis.
+                </p>
+              </div>
+              <ul class="text-xs text-gray-600 space-y-1.5 list-disc pl-4">
+                <li>Penganiayaan jasmani, pemukulan, dorongan paksa.</li>
+                <li>Ancaman kekerasan terhadap keselamatan diri atau keluarga.</li>
+                <li>Teror emosional dan manipulasi psikologis.</li>
+                <li>Penyalahgunaan wewenang secara sewenang-wenang.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Showcase Edukasi (Otomatis Menampilkan 3 Materi Terbaru) -->
+        <div class="space-y-4 pt-4 border-t border-sage-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-sage-900">Edukasi dan Kegiatan</h3>
+              <p class="text-xs text-gray-500">Materi edukasi terbaru seputar pencegahan dan perlindungan sivitas.</p>
+            </div>
+            <a href="#edukasi-kegiatan"
+              class="nav-link text-xs font-bold text-sage-700 hover:underline flex items-center gap-1">
+              Lihat selengkapnya <span>→</span>
+            </a>
+          </div>
+
+          <div id="beranda-showcase-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Otomatis diisi oleh JavaScript: 3 Materi Edukasi Paling Baru -->
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-500 italic">
+          * Seluruh laporan Anda dilindungi kode etik kerahasiaan institusi. Anda berhak melaporkan sebagai korban
+          maupun saksi.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 2: PROFIL
+         - Submenu / Tab: Tim Satgas, Tugas dan Wewenang, Prinsip
+         ===================================================================== -->
+    <section id="profil" class="page-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-sage-900">Profil Satgas PPKPT Pelita Bangsa</h2>
+          <p class="text-sm text-gray-600">Organ independen universitas untuk penegakan rasa aman dan keadilan akademik.
+          </p>
+        </div>
+
+        <!-- Subtab Buttons: Tim Satgas | Tugas dan Wewenang | Prinsip -->
+        <div class="flex justify-center border-b border-sage-200" data-tab-group="profil-tabs">
+          <div class="inline-flex gap-2 p-1.5 bg-sage-100 rounded-2xl">
+            <button type="button"
+              class="subtab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
+              data-tab="tab-tim">
+              👥 Tim Satgas
+            </button>
+            <button type="button"
+              class="subtab-btn bg-white text-gray-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
+              data-tab="tab-tugas">
+              📋 Tugas &amp; Wewenang
+            </button>
+            <button type="button"
+              class="subtab-btn bg-white text-gray-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
+              data-tab="tab-prinsip">
+              ⚖️ Prinsip
+            </button>
+          </div>
+        </div>
+
+        <!-- Content 1: Tim Satgas -->
+        <div data-tab-content="profil-tabs" data-tab-id="tab-tim" class="space-y-6">
+          <div class="sage-card p-6">
+            <h3 class="text-lg font-bold text-sage-900 mb-2">Komposisi Tim Satgas PPKPT</h3>
+            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mb-6">
+              Sesuai amanat Permendikbudristek, Satuan Tugas PPKPT Universitas Pelita Bangsa dibentuk secara transparan
+              melalui panitia seleksi independen dengan memperhatikan keterwakilan perempuan minimal 50% dan terdiri
+              dari 3 unsur:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-sage-50 p-4 rounded-xl border border-sage-200 text-center">
+                <div
+                  class="w-12 h-12 bg-white rounded-full mx-auto flex items-center justify-center text-xl shadow-sm mb-3">
+                  🎓</div>
+                <h4 class="font-bold text-sm text-sage-900">Unsur Pendidik (Dosen)</h4>
+                <p class="text-xs text-gray-600 mt-1">Dosen dengan rekam jejak integritas akademik dan pemahaman hukum
+                  pencegahan kekerasan.</p>
+              </div>
+
+              <div class="bg-sage-50 p-4 rounded-xl border border-sage-200 text-center">
+                <div
+                  class="w-12 h-12 bg-white rounded-full mx-auto flex items-center justify-center text-xl shadow-sm mb-3">
+                  🏛️</div>
+                <h4 class="font-bold text-sm text-sage-900">Tenaga Kependidikan</h4>
+                <p class="text-xs text-gray-600 mt-1">Staf administrasi dan operasional kampus yang terlatih mengelola
+                  SOP perlindungan data.</p>
+              </div>
+
+              <div class="bg-sage-50 p-4 rounded-xl border border-sage-200 text-center">
+                <div
+                  class="w-12 h-12 bg-white rounded-full mx-auto flex items-center justify-center text-xl shadow-sm mb-3">
+                  🎒</div>
+                <h4 class="font-bold text-sm text-sage-900">Unsur Mahasiswa</h4>
+                <p class="text-xs text-gray-600 mt-1">Perwakilan mahasiswa aktif yang menjadi jembatan empati dan
+                  pendamping sebaya.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content 2: Tugas dan Wewenang -->
+        <div data-tab-content="profil-tabs" data-tab-id="tab-tugas" class="hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="sage-card p-6">
+              <h4 class="text-base font-bold text-sage-900 mb-3 flex items-center gap-2">
+                <span class="text-emerald-700">📌</span> Tugas Utama Satgas
+              </h4>
+              <ul class="text-xs sm:text-sm text-gray-700 space-y-2.5 list-disc pl-4">
+                <li>Menyusun dan menyosialisasikan pedoman teknis pencegahan kekerasan di kampus.</li>
+                <li>Menerima laporan dugaan tindak kekerasan dari sivitas akademika.</li>
+                <li>Melakukan pemeriksaan dan asesmen komprehensif atas aduan.</li>
+                <li>Menyusun kesimpulan dan rekomendasi penanganan sanksi kepada Rektor.</li>
+                <li>Memfasilitasi pendampingan konseling dan perlindungan korban.</li>
+              </ul>
+            </div>
+
+            <div class="sage-card p-6">
+              <h4 class="text-base font-bold text-sage-900 mb-3 flex items-center gap-2">
+                <span class="text-emerald-700">⚡</span> Wewenang Satgas
+              </h4>
+              <ul class="text-xs sm:text-sm text-gray-700 space-y-2.5 list-disc pl-4">
+                <li>Memanggil terlapor, saksi, maupun pihak terkait untuk klarifikasi tertutup.</li>
+                <li>Meminta dokumen dan bukti pendukung dari unit internal universitas.</li>
+                <li>Merekomendasikan perlindungan sementara bagi korban (akademik maupun psikis).</li>
+                <li>Bekerja sama dengan lembaga layanan pendampingan eksternal bila dibutuhkan.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content 3: Prinsip -->
+        <div data-tab-content="profil-tabs" data-tab-id="tab-prinsip" class="hidden space-y-6">
+          <div class="sage-card p-6">
+            <h3 class="text-lg font-bold text-sage-900 mb-4">Prinsip Kerja Satgas PPKPT Pelita Bangsa</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <h5 class="font-bold text-xs sm:text-sm text-sage-900 mb-1">1. Kerahasiaan (Confidentiality)</h5>
+                <p class="text-xs text-gray-600">Identitas dan berkas laporan terlindungi oleh kode etik ketat dan tidak
+                  dipublikasikan.</p>
+              </div>
+
+              <div class="p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <h5 class="font-bold text-xs sm:text-sm text-sage-900 mb-1">2. Keberpihakan pada Korban</h5>
+                <p class="text-xs text-gray-600">Mengutamakan keselamatan fisik, psikologis, dan keberlanjutan hak
+                  akademik korban.</p>
+              </div>
+
+              <div class="p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <h5 class="font-bold text-xs sm:text-sm text-sage-900 mb-1">3. Non-Diskriminasi</h5>
+                <p class="text-xs text-gray-600">Layanan diberikan setara tanpa membedakan suku, agama, ras, gender,
+                  maupun jabatan.</p>
+              </div>
+
+              <div class="p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <h5 class="font-bold text-xs sm:text-sm text-sage-900 mb-1">4. Keadilan &amp; Kepastian Hukum</h5>
+                <p class="text-xs text-gray-600">Pemeriksaan dilakukan secara objektif berlandaskan regulasi resmi yang
+                  berlaku.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 3: EDUKASI DAN KEGIATAN
+         ===================================================================== -->
+    <section id="edukasi-kegiatan" class="page-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-sage-900">Edukasi dan Kegiatan</h2>
+          <p class="text-sm text-gray-600">Publikasi materi edukasi, panduan pencegahan, dan agenda resmi Satgas PPKPT.
+          </p>
+        </div>
+
+        <div id="semua-edukasi-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Diisi otomatis oleh JavaScript -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 5: INFORMASI DAN LAYANAN
+         - Submenu / Tab: Alur Pelaporan, Unduhan
+         ===================================================================== -->
+    <section id="informasi-layanan" class="page-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-sage-900">Informasi dan Layanan</h2>
+          <p class="text-sm text-gray-600">Pelajari mekanisme penanganan laporan dan unduh dokumen resmi satgas.</p>
+        </div>
+
+        <!-- Subtab Buttons: Alur Pelaporan | Unduhan -->
+        <div class="flex justify-center border-b border-sage-200" data-tab-group="layanan-tabs">
+          <div class="inline-flex gap-2 p-1.5 bg-sage-100 rounded-2xl">
+            <button type="button"
+              class="subtab-btn active px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
+              data-tab="tab-alur">
+              🔄 Alur Pelaporan
+            </button>
+            <button type="button"
+              class="subtab-btn bg-white text-gray-700 px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
+              data-tab="tab-unduhan">
+              📥 Unduhan (SOP &amp; Dokumen)
+            </button>
+          </div>
+        </div>
+
+        <!-- Content 1: Alur Pelaporan -->
+        <div data-tab-content="layanan-tabs" data-tab-id="tab-alur" class="space-y-4">
+          <div class="sage-card p-6 sm:p-8">
+            <h3 class="text-lg font-bold text-sage-900 mb-6 text-center">Tahapan Penanganan Laporan Terpadu</h3>
+
+            <div class="space-y-4">
+              <!-- Step 1 -->
+              <div class="flex items-start gap-4 p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                <div
+                  class="w-9 h-9 rounded-full bg-sage-700 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  1</div>
+                <div>
+                  <h4 class="font-bold text-sm text-sage-900">Penerimaan Laporan</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">Laporan diajukan melalui tombol "Laporkan!" atau hotline
+                    darurat. Kerahasiaan data langsung terproteksi.</p>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flex items-start gap-4 p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                <div
+                  class="w-9 h-9 rounded-full bg-sage-700 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  2</div>
+                <div>
+                  <h4 class="font-bold text-sm text-sage-900">Pemeriksaan Awal &amp; Perlindungan</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">Satgas mengidentifikasi kebutuhan mendesak korban (konseling
+                    medis/psikologis atau jaminan keamanan akademik).</p>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flex items-start gap-4 p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                <div
+                  class="w-9 h-9 rounded-full bg-sage-700 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  3</div>
+                <div>
+                  <h4 class="font-bold text-sm text-sage-900">Investigasi &amp; Klarifikasi Tertutup</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">Pengumpulan bukti dan pemeriksaan pihak-pihak terkait secara
+                    terpisah tanpa mempertemukan korban dengan terlapor.</p>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="flex items-start gap-4 p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                <div
+                  class="w-9 h-9 rounded-full bg-sage-700 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  4</div>
+                <div>
+                  <h4 class="font-bold text-sm text-sage-900">Penyusunan Rekomendasi Sanksi</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">Satgas menerbitkan kesimpulan hasil pemeriksaan dan
+                    rekomendasi sanksi kepada pimpinan perguruan tinggi.</p>
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div class="flex items-start gap-4 p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                <div
+                  class="w-9 h-9 rounded-full bg-sage-700 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  5</div>
+                <div>
+                  <h4 class="font-bold text-sm text-sage-900">Pemulihan Hak Korban</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">Pemantauan pemulihan hak-hak akademik korban serta pengawasan
+                    kepatuhan sanksi oleh pihak universitas.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-6">
+              <button type="button"
+                class="js-open-report-modal btn-report-red px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm">
+                Laporkan!
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content 2: Unduhan (SOP & Dokumen) -->
+        <div data-tab-content="layanan-tabs" data-tab-id="tab-unduhan" class="hidden space-y-4">
+          <div class="sage-card p-6">
+            <h3 class="text-lg font-bold text-sage-900 mb-4">Berkas Resmi &amp; Pedoman PPKPT</h3>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <div class="flex items-center gap-3">
+                  <span class="text-red-600 text-xl font-bold">📄</span>
+                  <div>
+                    <h5 class="text-xs sm:text-sm font-bold text-sage-900">Pedoman Pencegahan &amp; Penanganan Kekerasan
+                      UPB</h5>
+                    <span class="text-[11px] text-gray-500">PDF • Dokumen Resmi Universitas</span>
+                  </div>
+                </div>
+                <a href="#unduh"
+                  onclick="alert('Mengunduh Pedoman PPKPT Universitas Pelita Bangsa (PDF)...'); return false;"
+                  class="text-xs font-bold text-sage-700 hover:underline px-3 py-1.5 bg-white border border-sage-300 rounded-lg shadow-sm">
+                  Unduh Dokumen
+                </a>
+              </div>
+
+              <div class="flex items-center justify-between p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <div class="flex items-center gap-3">
+                  <span class="text-red-600 text-xl font-bold">📄</span>
+                  <div>
+                    <h5 class="text-xs sm:text-sm font-bold text-sage-900">Standar Operasional Prosedur (SOP) Penanganan
+                      Aduan</h5>
+                    <span class="text-[11px] text-gray-500">PDF • Alur Teknis & Kode Etik</span>
+                  </div>
+                </div>
+                <a href="#unduh" onclick="alert('Mengunduh SOP Penanganan Aduan (PDF)...'); return false;"
+                  class="text-xs font-bold text-sage-700 hover:underline px-3 py-1.5 bg-white border border-sage-300 rounded-lg shadow-sm">
+                  Unduh Dokumen
+                </a>
+              </div>
+
+              <div class="flex items-center justify-between p-3.5 bg-sage-50 rounded-xl border border-sage-200">
+                <div class="flex items-center gap-3">
+                  <span class="text-red-600 text-xl font-bold">📄</span>
+                  <div>
+                    <h5 class="text-xs sm:text-sm font-bold text-sage-900">Formulir Persetujuan Pendampingan Korban</h5>
+                    <span class="text-[11px] text-gray-500">PDF • Dokumen Kerahasiaan</span>
+                  </div>
+                </div>
+                <a href="#unduh" onclick="alert('Mengunduh Formulir Persetujuan Pendampingan (PDF)...'); return false;"
+                  class="text-xs font-bold text-sage-700 hover:underline px-3 py-1.5 bg-white border border-sage-300 rounded-lg shadow-sm">
+                  Unduh Dokumen
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 6: KONTAK
+         ===================================================================== -->
+    <section id="kontak" class="page-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-sage-900">Kontak Satgas PPKPT</h2>
+          <p class="text-sm text-gray-600">Hubungi kami melalui saluran resmi atau kunjungi sekretariat ruang aman kami.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div class="sage-card p-6 space-y-4">
+            <h3 class="text-base font-bold text-sage-900 flex items-center gap-2">
+              <span>🏛️</span> Ruang Aman / Sekretariat
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+              Gedung Rektorat Lantai 2, Kampus Universitas Pelita Bangsa.<br>
+              Jl. Inspeksi Kalimalang No.9, Cibatu, Cikarang Pusat, Kabupaten Bekasi, Jawa Barat.
+            </p>
+            <div class="p-3 bg-sage-50 rounded-xl border border-sage-200 text-xs text-sage-800">
+              <strong>Jam Layanan Tatap Muka:</strong><br>
+              Senin – Jumat: 08.30 – 16.30 WIB
+            </div>
+          </div>
+
+          <div class="sage-card p-6 space-y-4">
+            <h3 class="text-base font-bold text-sage-900 flex items-center gap-2">
+              <span>📞</span> Saluran Cepat (Hotline)
+            </h3>
+            <div class="space-y-3 text-xs sm:text-sm">
+              <div class="flex items-center justify-between p-3 bg-sage-50 rounded-xl border border-sage-200">
+                <span>WhatsApp / Hotline:</span>
+                <a href="https://wa.me/6281299998888" target="_blank"
+                  class="font-bold text-emerald-700 hover:underline">
+                  0812-9999-8888
+                </a>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-sage-50 rounded-xl border border-sage-200">
+                <span>Email Resmi:</span>
+                <span class="font-bold text-sage-900">satgas.ppkpt@pelitabangsa.ac.id</span>
+              </div>
+            </div>
+            <button type="button"
+              class="js-open-report-modal w-full py-2.5 btn-report-red font-bold text-xs rounded-xl transition-colors">
+              Buka Formulir Pengaduan Online
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 7: FAQ
+         ===================================================================== -->
+    <section id="faq" class="page-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-sage-900">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+          <p class="text-sm text-gray-600">Jawaban mengenai hak pelapor, kerahasiaan, dan prosedur Satgas.</p>
+        </div>
+
+        <div class="space-y-3">
+
+          <div class="faq-item sage-card overflow-hidden">
+            <button type="button"
+              class="faq-question w-full px-5 py-4 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-sage-900">
+              <span>Apakah identitas saya benar-benar dirahasiakan saat melapor?</span>
+              <svg class="faq-icon w-4 h-4 text-sage-600 transition-transform" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              class="faq-answer hidden px-5 pb-4 text-xs text-gray-600 leading-relaxed border-t border-sage-100 pt-3">
+              <strong>Ya, dijamin 100%.</strong> Seluruh anggota Satgas terikat sumpah kode etik kerahasiaan. Data
+              pribadi pelapor atau korban tidak akan pernah disebarluaskan dan dilindungi dari kemungkinan intimidasi.
+            </div>
+          </div>
+
+          <div class="faq-item sage-card overflow-hidden">
+            <button type="button"
+              class="faq-question w-full px-5 py-4 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-sage-900">
+              <span>Apakah saya dapat melapor sebagai saksi atau perwakilan teman?</span>
+              <svg class="faq-icon w-4 h-4 text-sage-600 transition-transform" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              class="faq-answer hidden px-5 pb-4 text-xs text-gray-600 leading-relaxed border-t border-sage-100 pt-3">
+              <strong>Bisa.</strong> Siapa pun sivitas akademika yang menyaksikan atau menerima informasi kekerasan
+              dapat menyampaikan laporan awal. Satgas akan berkoordinasi terlebih dahulu dengan korban untuk memastikan
+              persetujuan dan kenyamanannya.
+            </div>
+          </div>
+
+          <div class="faq-item sage-card overflow-hidden">
+            <button type="button"
+              class="faq-question w-full px-5 py-4 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-sage-900">
+              <span>Bagaimana jika pelaku memiliki pengaruh atau kedudukan lebih tinggi?</span>
+              <svg class="faq-icon w-4 h-4 text-sage-600 transition-transform" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              class="faq-answer hidden px-5 pb-4 text-xs text-gray-600 leading-relaxed border-t border-sage-100 pt-3">
+              Satgas PPKPT bekerja independen tanpa memandang relasi kuasa. Korban segera diberikan jaminan perlindungan
+              akademik (misal proteksi nilai, jaminan bimbingan skripsi yang adil) untuk mencegah aksi balas dendam.
+            </div>
+          </div>
+
+          <div class="faq-item sage-card overflow-hidden">
+            <button type="button"
+              class="faq-question w-full px-5 py-4 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-sage-900">
+              <span>Apakah ada biaya untuk mendapatkan layanan konseling dan pendampingan?</span>
+              <svg class="faq-icon w-4 h-4 text-sage-600 transition-transform" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              class="faq-answer hidden px-5 pb-4 text-xs text-gray-600 leading-relaxed border-t border-sage-100 pt-3">
+              <strong>Seluruh layanan Satgas 100% Gratis (Bebas Biaya).</strong> Semua proses penanganan, konseling
+              psikologis awal, dan pendampingan advokasi dibiayai penuh oleh universitas.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="bg-white border-t border-sage-200 py-6 text-xs text-gray-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <img src="assets/images/logo.jpg" alt="Logo" class="w-6 h-6 object-contain">
+        <span class="font-bold text-sage-900">Satgas PPKPT Universitas Pelita Bangsa</span>
+      </div>
+      <div>
+        © <span class="js-current-year">2026</span> Ruang Aman Sivitas Akademika Pelita Bangsa.
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL PELAPORAN RESMI (TIDAK MENYEBUT GOOGLE FORM)
+       ========================================================================= -->
+  <div id="report-modal"
+    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl border border-sage-200">
+
+      <div class="w-14 h-14 rounded-2xl bg-sage-100 text-sage-700 mx-auto flex items-center justify-center mb-4">
+        <img src="assets/images/logo.jpg" alt="Logo Satgas" class="w-10 h-10 object-contain">
+      </div>
+
+      <h3 class="text-xl font-bold text-sage-900 mt-2 mb-2">Formulir Pengaduan Resmi</h3>
+      <p class="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
+        Anda akan diarahkan ke formulir pelaporan resmi Satgas PPKPT Universitas Pelita Bangsa. Laporan Anda tercatat
+        langsung ke sistem aman Satgas dengan enkripsi kerahasiaan.
+      </p>
+
+      <div class="space-y-3">
+        <!-- Tautan ke form pelaporan resmi (tanpa menyebut Google Form) -->
+        <a href="https://forms.gle/official-satgas-ppkpt-pelitabangsa" target="_blank" rel="noopener noreferrer"
+          class="w-full py-3.5 btn-report-red font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow">
+          <span>📝</span> Buka Formulir Pengaduan
+        </a>
+
+        <a href="https://wa.me/6281299998888?text=Halo%20Satgas%20PPKPT%20Pelita%20Bangsa,%20saya%20ingin%20berkonsultasi%20secara%20rahasia."
+          target="_blank" rel="noopener noreferrer"
+          class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-colors flex items-center justify-center gap-2">
+          <span>💬</span> Laporkan via WhatsApp Darurat
+        </a>
+
+        <button type="button"
+          class="js-close-report-modal w-full py-2.5 text-xs font-semibold text-gray-500 hover:text-gray-700 transition-colors">
+          Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DETAIL MATERI EDUKASI (MEMBACA ISI KONTEN LENGKAP)
+       ========================================================================= -->
+  <div id="edukasi-detail-modal"
+    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-sage-200 overflow-hidden">
+
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-sage-50/70 flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="edu-modal-icon"
+            class="w-10 h-10 rounded-xl bg-white border border-sage-200 text-sage-800 flex items-center justify-center text-xl flex-shrink-0">
+            📄
+          </div>
+          <div>
+            <span id="edu-modal-category"
+              class="text-[10px] font-bold text-sage-700 uppercase tracking-wider block leading-none mb-1">Kategori</span>
+            <div class="flex items-center gap-1.5 text-xs text-gray-500">
+              <span id="edu-modal-author" class="font-semibold text-sage-900">Satgas PPKPT</span>
+              <span>&bull;</span>
+              <span id="edu-modal-date" class="text-gray-400">Tanggal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body (Isi Konten Lengkap) -->
+      <div class="p-6 sm:p-8 overflow-y-auto space-y-5 text-gray-800 leading-relaxed text-sm">
+        <h2 id="edu-modal-title" class="text-xl sm:text-2xl font-black text-sage-900 leading-snug">
+          Judul Materi Edukasi
+        </h2>
+
+        <div id="edu-modal-summary"
+          class="p-4 rounded-2xl bg-sage-50/80 border border-sage-200 text-sage-900 font-medium text-xs sm:text-sm leading-relaxed">
+          Ringkasan materi edukasi...
+        </div>
+
+        <div id="edu-modal-content" class="space-y-4 text-gray-700 text-xs sm:text-sm leading-relaxed">
+          <!-- Konten artikel diisi secara dinamis oleh JavaScript -->
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between gap-3 flex-shrink-0">
+        <button type="button"
+          class="js-close-edu-modal px-5 py-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs sm:text-sm transition-colors">
+          Tutup
+        </button>
+        <button type="button"
+          class="js-open-report-from-edu px-5 py-2.5 rounded-xl btn-report-red font-bold text-xs sm:text-sm shadow-sm transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          Laporkan Pelanggaran
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript (with cache-bust parameter) -->
+  <script src="assets/js/main.js?v=2.7"></script>
+</body>
+
+</html>

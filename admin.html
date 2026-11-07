@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin Dashboard - Satgas PPKPT Pelita Bangsa</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: {
+              50: '#F4F7F5',
+              100: '#EAF0EC',
+              200: '#D8E2DC',
+              300: '#C4D3C8',
+              400: '#A3B8A8',
+              500: '#6B8E73',
+              600: '#52745A',
+              700: '#4A6B53',
+              800: '#364E3E',
+              900: '#2B3D31',
+            },
+            action: {
+              red: '#C85A5A',
+              redHover: '#B54A4A',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM 18 & Babel Standalone (Non-IT User friendly single-file bundle) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F4F7F5;
+      color: #2B3D31;
+    }
+
+    .sage-card {
+      background: #FFFFFF;
+      border: 1px solid #D8E2DC;
+      box-shadow: 0 1px 3px 0 rgba(43, 61, 49, 0.05);
+    }
+
+    .btn-action-red {
+      background-color: #C85A5A;
+      color: #FFFFFF;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-red:hover {
+      background-color: #B54A4A;
+      box-shadow: 0 4px 12px rgba(200, 90, 90, 0.25);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slideUp {
+      animation: slideUp 0.25s ease-out forwards;
+    }
+
+    /* Soft Ambient Animations Khusus Halaman Login */
+    @keyframes floatOrb1 {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(35px, -45px) scale(1.06); }
+      66% { transform: translate(-25px, 25px) scale(0.96); }
+      100% { transform: translate(15px, -15px) scale(1.03); }
+    }
+    @keyframes floatOrb2 {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(-45px, 35px) scale(0.94); }
+      66% { transform: translate(25px, -35px) scale(1.05); }
+      100% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+    @keyframes floatOrb3 {
+      0% { transform: translate(0px, 0px) scale(1); opacity: 0.35; }
+      50% { transform: translate(30px, 30px) scale(1.1); opacity: 0.6; }
+      100% { transform: translate(-20px, -10px) scale(0.92); opacity: 0.4; }
+    }
+    @keyframes softPulseGlow {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.75; }
+    }
+
+    .animate-float-1 {
+      animation: floatOrb1 20s ease-in-out infinite alternate;
+    }
+    .animate-float-2 {
+      animation: floatOrb2 26s ease-in-out infinite alternate;
+    }
+    .animate-float-3 {
+      animation: floatOrb3 18s ease-in-out infinite alternate;
+    }
+    .animate-soft-pulse {
+      animation: softPulseGlow 12s ease-in-out infinite;
+    }
+
+    /* Soft Grid Pattern for Login Canvas */
+    .login-grid-bg {
+      background-image: radial-gradient(rgba(43, 61, 49, 0.08) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F4F7F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #C4D3C8;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A3B8A8;
+    }
+  </style>
+</head>
+
+<body class="bg-sage-50 text-sage-900 min-h-screen antialiased selection:bg-sage-200 selection:text-sage-900">
+
+  <!-- Root Container for React App -->
+  <div id="root"></div>
+
+  <!-- React Application Logic -->
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef } = React;
+
+    // Kategori Resmi & Gaya Tampilan
+    const CATEGORIES = {
+      'Kekerasan Seksual': {
+        label: 'Kekerasan Seksual',
+        badgeClass: 'bg-red-50 text-red-700 border-red-200',
+        dotClass: 'bg-red-500',
+        icon: '⚠️'
+      },
+      'Perundungan (Bullying)': {
+        label: 'Perundungan (Bullying)',
+        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        dotClass: 'bg-amber-500',
+        icon: '🛑'
+      },
+      'Tindakan Intoleransi': {
+        label: 'Tindakan Intoleransi',
+        badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+        dotClass: 'bg-blue-500',
+        icon: '⚖️'
+      },
+      'Kekerasan Fisik & Psikis': {
+        label: 'Kekerasan Fisik & Psikis',
+        badgeClass: 'bg-purple-50 text-purple-700 border-purple-200',
+        dotClass: 'bg-purple-500',
+        icon: '🛡️'
+      }
+    };
+
+    // Data Awal Bawaan Sistem (Hanya aktif saat pertama kali dibuka)
+    const INITIAL_ARTICLES = [
+      {
+        id: 'edu-1',
+        title: 'Batasan & Persetujuan (Consent) dalam Relasi Kampus',
+        category: 'Kekerasan Seksual',
+        contentType: 'text',
+        mediaUrl: '',
+        date: '2026-11-06',
+        icon: '⚖️',
+        summary: 'Pahami etika akademik, konsep persetujuan (consent), dan batas kewajaran dalam interaksi antar sivitas tanpa intimidasi relasi kuasa.',
+        content: 'Persetujuan (Consent) adalah komunikasi sadar, sukarela, dan setara sebelum melakukan interaksi atau tindakan fisik/personal tertentu.\n\nPrinsip 5 Karakteristik Utama Consent (F.R.I.E.S):\n- Freely Given (Sukarela Sepenuhnya): Diberikan tanpa paksaan atau ancaman relasi kuasa.\n- Reversible (Dapat Dibatalkan Kapan Saja): Setiap orang berhak mengubah pikiran kapan saja.\n- Informed (Jelas & Sadar): Kedua pihak memahami konteks interaksi.\n- Enthusiastic (Antusias & Nyata): Persetujuan adalah kerelaan aktif.\n- Specific (Spesifik): Menyetujui satu hal bukan berarti menyetujui hal lainnya.',
+        author: {
+          name: 'Djoko Nugroho, M.Psi.',
+          role: 'Ketua',
+          category: 'Dosen'
+        }
+      },
+      {
+        id: 'edu-2',
+        title: 'Stop Perundungan (Bullying) & Pencegahan KBGO',
+        category: 'Perundungan (Bullying)',
+        contentType: 'text',
+        mediaUrl: '',
+        date: '2026-11-04',
+        icon: '🛑',
+        summary: 'Kenali bentuk cyberbullying, pelecehan verbal, dan perpeloncoan liar agar dapat mencegahnya sejak dini di lingkungan kita.',
+        content: 'Kekerasan Berbasis Gender Online (KBGO) dan perundungan di ruang digital menimbulkan dampak psikologis yang mendalam bagi korban.\n\nBentuk yang Dilarang:\n- Penyebaran foto/pesan tanpa izin\n- Doxing dan ancaman di media sosial\n- Perpeloncoan liar berkedok senioritas',
+        author: {
+          name: 'Dr. Wulan Windiarti, S.H., M.H.',
+          role: 'Sekretaris',
+          category: 'Dosen'
+        }
+      },
+      {
+        id: 'edu-3',
+        title: 'Video Sosialisasi Penanganan Kekerasan di Perguruan Tinggi',
+        category: 'Tindakan Intoleransi',
+        contentType: 'youtube',
+        mediaUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        date: '2026-11-02',
+        icon: '🎥',
+        summary: 'Simak video penjelasan singkat alur pendampingan dan hak perlindungan penuh bagi mahasiswa pelapor dan saksi.',
+        content: 'Video panduan edukasi resmi mengenai pencegahan kekerasan di lingkungan kampus.',
+        author: {
+          name: 'Khansa Nadya Atika Rahma, S.Psi., M.M.',
+          role: 'Anggota',
+          category: 'Tendik'
+        }
+      }
+    ];
+
+    // Helper: Ekstraksi ID Video YouTube
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // Helper: Ekstraksi Embed URL Instagram
+    function extractInstagramEmbed(url) {
+      if (!url) return null;
+      const match = url.match(/(?:instagram\.com\/(?:p|reel)\/)([\w-]+)/);
+      return match ? `https://www.instagram.com/p/${match[1]}/embed` : null;
+    }
+
+    // Helper: Enkripsi Hash Password Keamanan Klien (Salted SHA-256)
+    // Melindungi kredensial staf agar tidak pernah tersimpan dalam bentuk teks biasa di repositori publik
+    async function computeSecureHash(plainText) {
+      const salt = '::satgas_ppkpt_salt_upb::2026';
+      const enc = new TextEncoder().encode(plainText + salt);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Daftar Akun Staf Resmi Terdaftar (Password Terproteksi Hash Kriptografi & NUPTK/NIM Masking)
+    const AUTHORIZED_ACCOUNTS = [
+      {
+        email: 'djokonugroho@pelitabangsa.ac.id',
+        passwordHash: 'fe8e307608398d45a18971699558171b13822a647df522bb151b9a4bb2ae478a',
+        name: 'Djoko Nugroho, M.Psi.',
+        role: 'Ketua',
+        category: 'Dosen',
+        idNumber: '1754****0132',
+        avatarInitials: 'DN'
+      },
+      {
+        email: 'wulanwindiarti@pelitabangsa.ac.id',
+        passwordHash: '8d3aa7d45b705e30b8aa9d1984f4e6f40eb2f7be7f86c68e51fca336aee2bc35',
+        name: 'Dr. Wulan Windiarti, S.H., M.H.',
+        role: 'Sekretaris',
+        category: 'Dosen',
+        idNumber: '5644****7012',
+        avatarInitials: 'WW'
+      },
+      {
+        email: 'ndy.data@gmail.com',
+        passwordHash: '2bc086b7e8b8bf07aa0cd423676ed8483dd29eb15d2f0426b25e5e0ed5996b5a',
+        name: 'Khansa Nadya Atika Rahma, S.Psi., M.M.',
+        role: 'Anggota',
+        category: 'Tendik',
+        idNumber: '1250****8029',
+        avatarInitials: 'KN'
+      },
+      {
+        email: 'nabilasyifa@pelitabangsa.ac.id',
+        passwordHash: 'ee876c47005dcf7215a607ca2a9926ccf96e176bf9ca99a22303a29650a19cf1',
+        name: "Nabilah Syifa' Savira, S.M.",
+        role: 'Anggota',
+        category: 'Tendik',
+        idNumber: '2201****0362',
+        avatarInitials: 'NS'
+      },
+      {
+        email: 'raflidwip@pelitabangsa.ac.id',
+        passwordHash: '8ae30c63a18d298fb72496228ea15782a24c31b1389196073e406c5eccd3045e',
+        name: 'Rafli Dwi Putra, S.M',
+        role: 'Anggota',
+        category: 'Tendik',
+        idNumber: '2402****0443',
+        avatarInitials: 'RD'
+      },
+      {
+        email: 'tsnugroho@pelitabangsa.ac.id',
+        passwordHash: 'dabd59eb0c51da55b2e711a0a3cb9fd4273ec52ff70abeaeae7a3c1f5a80a0b2',
+        name: 'Taufiqillah Sapto Nugroho, S.M',
+        role: 'Anggota',
+        category: 'Tendik',
+        idNumber: '2504****0480',
+        avatarInitials: 'TN'
+      },
+      {
+        email: 'artantica2024@gmail.com',
+        passwordHash: 'b25cf92eef048359cfc3b40c40be22e30f2b75ce1b1984a0e9cdde9d91820373',
+        name: 'Artanti Cahyarani Azzahrah',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '1124****0301',
+        avatarInitials: 'AC'
+      },
+      {
+        email: 'agustinrossa955@gmail.com',
+        passwordHash: '8863e7c006f3a72bf55f04a585f522c2384390376195ae5e064b9647d52247a4',
+        name: 'Rossa Agustin',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '4424****0128',
+        avatarInitials: 'RA'
+      },
+      {
+        email: 'alifiyanidwiputri@gmail.com',
+        passwordHash: '9613b31f23832df0d1ffaca7e999c0c83ce1e70b652a24df2ccf7f6f563b5a21',
+        name: 'Alipiani Dwi Putri',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '3124****0691',
+        avatarInitials: 'AD'
+      },
+      {
+        email: 'arfiandafirsta@gmail.com',
+        passwordHash: '105edded54d599a367465a721d51565b3781b411a1ceb692080bffe3f2e269fc',
+        name: 'Arfianda Firsta Satritama',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '3124****0377',
+        avatarInitials: 'AF'
+      },
+      {
+        email: 'sabrinadwp13@gmail.com',
+        passwordHash: '332779e1d7c06f2f2904a23b866eff2f0bd1e6d101c27244bd843ba2a78262bf',
+        name: 'Sabrina Dwi Aprillia',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '4424****0137',
+        avatarInitials: 'SD'
+      },
+      {
+        email: 'ilhamdaniii45partly@gmail.com',
+        passwordHash: '68bd9038d38b78f60f3494b282057b95b028587694eda720cd50654ec9a80fc5',
+        name: 'Ilham Dani',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '4423****0262',
+        avatarInitials: 'ID'
+      },
+      {
+        email: 'rianisafitridamanik38@gmail.com',
+        passwordHash: 'f3fc94ab4e164b1965c3a8d25864898f4ed8fc1ba7e5758f9336e84e8dda8208',
+        name: 'Damanik Riani Safitri',
+        role: 'Anggota',
+        category: 'Mahasiswa',
+        idNumber: '3126****0306',
+        avatarInitials: 'DR'
+      },
+      {
+        email: 'admin.satgas@pelitabangsa.ac.id',
+        passwordHash: 'c8faa8e5967d9dfb48c29e21ac67f197ff3969c78f18129b003aba077b7f7059',
+        name: 'Administrator Satgas PPKPT',
+        role: 'Admin Utama',
+        category: 'Pengelola',
+        idNumber: 'ADMI****N-01',
+        avatarInitials: 'AS'
+      }
+    ];
+
+    // =========================================================================
+    // KOMPONEN HALAMAN LOGIN (SISTEM TERTUTUP - SAGE GREEN & SOFT WARM RED CTA)
+    // =========================================================================
+    function LoginPage({ onLoginSuccess }) {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      const [showPassword, setShowPassword] = useState(false);
+      const [rememberMe, setRememberMe] = useState(true);
+      const [errorMessage, setErrorMessage] = useState('');
+      const [isLoading, setIsLoading] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrorMessage('');
+
+        if (!email.trim() || !password) {
+          setErrorMessage('Silakan lengkapi email resmi dan kata sandi Anda.');
+          return;
+        }
+
+        setIsLoading(true);
+
+        // Simulasi verifikasi autentikasi terproteksi hash kriptografi
+        setTimeout(async () => {
+          const normalizedEmail = email.trim().toLowerCase();
+          let inputHash = '';
+          try {
+            inputHash = await computeSecureHash(password);
+          } catch (err) {
+            console.error('Hash error:', err);
+          }
+
+          const matched = AUTHORIZED_ACCOUNTS.find(
+            (acc) => acc.email.toLowerCase() === normalizedEmail && acc.passwordHash === inputHash
+          );
+
+          if (matched) {
+            setIsLoading(false);
+            onLoginSuccess({
+              email: matched.email,
+              name: matched.name,
+              role: matched.role,
+              category: matched.category || '',
+              idNumber: matched.idNumber || '',
+              avatarInitials: matched.avatarInitials,
+              rememberMe
+            });
+          } else {
+            setIsLoading(false);
+            setErrorMessage('Email atau kata sandi tidak cocok. Akses dibatasi untuk staf Satgas resmi.');
+          }
+        }, 400);
+      };
+
+      return (
+        <div className="min-h-screen bg-sage-50 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden">
+          
+          {/* Subtle Dot Grid Pattern */}
+          <div className="absolute inset-0 login-grid-bg pointer-events-none opacity-50" />
+
+          {/* Soft Floating Sage Aurora Orbs */}
+          <div className="absolute -top-36 -left-36 w-[480px] h-[480px] rounded-full bg-[#C4D3C8]/60 blur-[100px] pointer-events-none animate-float-1" />
+          <div className="absolute -bottom-40 -right-40 w-[520px] h-[520px] rounded-full bg-[#A3B8A8]/45 blur-[120px] pointer-events-none animate-float-2" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[620px] rounded-full bg-[#EAF0EC]/75 blur-[140px] pointer-events-none animate-soft-pulse" />
+          <div className="absolute top-1/4 right-1/4 w-[360px] h-[360px] rounded-full bg-[#D1E7DD]/50 blur-[90px] pointer-events-none animate-float-3" />
+
+          {/* Main Login Card */}
+          <div className="max-w-md w-full bg-white/95 backdrop-blur-md rounded-3xl p-7 sm:p-9 shadow-2xl border border-sage-200/90 relative z-10 space-y-6">
+            
+            {/* Logo & Judul Satgas */}
+            <div className="text-center space-y-3">
+              <div className="w-16 h-16 rounded-2xl bg-sage-50 border border-sage-200 flex items-center justify-center mx-auto shadow-sm p-2">
+                <img src="assets/images/logo.jpg" alt="Logo Satgas UPB" className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-extrabold text-sage-900 tracking-tight">
+                  Masuk Dashboard
+                </h1>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Satgas PPKPT Universitas Pelita Bangsa
+                </p>
+              </div>
+            </div>
+
+            {/* Kotak Peringatan Validasi Login */}
+            {errorMessage && (
+              <div className="p-3.5 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-2.5 text-xs text-red-700 animate-fadeIn">
+                <span className="text-base flex-shrink-0">⚠️</span>
+                <div className="leading-snug">{errorMessage}</div>
+              </div>
+            )}
+
+            {/* Formulir Autentikasi */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              
+              {/* Kolom Email */}
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-sage-900">
+                  Email Resmi Staf
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 text-sm">
+                    ✉️
+                  </span>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="nama@pelitabangsa.ac.id"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-600 focus:ring-1 focus:ring-sage-600 transition-all bg-white"
+                  />
+                </div>
+              </div>
+
+              {/* Kolom Kata Sandi */}
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-sage-900">
+                  Kata Sandi
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 text-sm">
+                    🔑
+                  </span>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Masukkan kata sandi..."
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-600 focus:ring-1 focus:ring-sage-600 transition-all bg-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 text-xs focus:outline-none"
+                    tabIndex="-1"
+                    title={showPassword ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
+                  >
+                    {showPassword ? '🙈' : '👁️'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Ingat Saya */}
+              <div className="flex items-center justify-between pt-0.5">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="w-4 h-4 rounded text-sage-700 border-gray-300 focus:ring-sage-500 accent-sage-700"
+                  />
+                  <span className="text-xs text-gray-600 font-medium">Ingat saya di perangkat ini</span>
+                </label>
+              </div>
+
+              {/* Tombol Aksi Masuk: Soft Warm Red (#C85A5A) */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn-action-red w-full py-3 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Memverifikasi Akses...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Masuk Dashboard</span>
+                    <span>→</span>
+                  </>
+                )}
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      );
+    }
+
+    // Main React Application
+    function App() {
+      // Sesi Pengguna / Auth State (Simulasi yang siap dihubungkan ke Firebase / Supabase Auth)
+      const [authUser, setAuthUser] = useState(() => {
+        try {
+          const saved = localStorage.getItem('satgas_admin_session') || sessionStorage.getItem('satgas_admin_session');
+          return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+          return null;
+        }
+      });
+
+      // Route Guarding & Tab Synchronizer
+      const [activeTab, setActiveTab] = useState(() => {
+        const hash = window.location.hash.replace('#', '');
+        if (['beranda', 'edukasi', 'pengaturan'].includes(hash)) {
+          return hash;
+        }
+        return 'beranda';
+      });
+
+      const [articles, setArticles] = useState([]);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [categoryFilter, setCategoryFilter] = useState('ALL');
+      const [typeFilter, setTypeFilter] = useState('ALL');
+      const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+      // Modal State
+      const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+      const [editingArticle, setEditingArticle] = useState(null);
+      const [deleteTarget, setDeleteTarget] = useState(null);
+
+      // Toast State
+      const [toast, setToast] = useState(null);
+
+      // Route Guarding Effect: Lindungi rute jika belum login
+      useEffect(() => {
+        const handleRouteGuard = () => {
+          const hash = window.location.hash.replace('#', '');
+          if (!authUser) {
+            if (hash !== 'login') {
+              window.location.hash = '#login';
+            }
+          } else {
+            if (hash === 'login' || !hash) {
+              window.location.hash = '#' + activeTab;
+            } else if (['beranda', 'edukasi', 'pengaturan'].includes(hash)) {
+              setActiveTab(hash);
+            }
+          }
+        };
+
+        handleRouteGuard();
+        window.addEventListener('hashchange', handleRouteGuard);
+        return () => window.removeEventListener('hashchange', handleRouteGuard);
+      }, [authUser, activeTab]);
+
+      const changeTab = (tab) => {
+        setActiveTab(tab);
+        window.location.hash = '#' + tab;
+        setIsMobileSidebarOpen(false);
+      };
+
+      const handleLoginSuccess = (userData) => {
+        const session = {
+          email: userData.email,
+          name: userData.name,
+          role: userData.role,
+          avatarInitials: userData.avatarInitials,
+          token: 'satgas-auth-' + Date.now(),
+          loggedInAt: new Date().toISOString()
+        };
+
+        if (userData.rememberMe) {
+          localStorage.setItem('satgas_admin_session', JSON.stringify(session));
+        } else {
+          sessionStorage.setItem('satgas_admin_session', JSON.stringify(session));
+        }
+
+        setAuthUser(session);
+        const targetTab = ['beranda', 'edukasi', 'pengaturan'].includes(activeTab) ? activeTab : 'beranda';
+        setActiveTab(targetTab);
+        window.location.hash = '#' + targetTab;
+        showToast(`Selamat datang, ${userData.name}!`, 'success');
+      };
+
+      const handleLogout = () => {
+        try {
+          localStorage.removeItem('satgas_admin_session');
+          sessionStorage.removeItem('satgas_admin_session');
+        } catch (e) {}
+        setAuthUser(null);
+        window.location.hash = '#login';
+        showToast('Anda telah keluar dari sesi admin.', 'info');
+      };
+
+      // 1. Inisialisasi Data dari LocalStorage
+      useEffect(() => {
+        try {
+          const rawMaster = localStorage.getItem('satgas_ppkpt_admin_edukasi');
+          if (rawMaster !== null) {
+            setArticles(JSON.parse(rawMaster));
+          } else {
+            const rawPublic = localStorage.getItem('upb_ppkpt_custom_edukasi');
+            if (rawPublic !== null) {
+              setArticles(JSON.parse(rawPublic));
+            } else {
+              setArticles(INITIAL_ARTICLES);
+              saveToStorage(INITIAL_ARTICLES);
+            }
+          }
+        } catch (e) {
+          console.warn('Gagal membaca data:', e);
+          setArticles(INITIAL_ARTICLES);
+        }
+      }, []);
+
+      // Simpan perubahan ke LocalStorage & website publik
+      const saveToStorage = (newArticles) => {
+        try {
+          localStorage.setItem('satgas_ppkpt_admin_edukasi', JSON.stringify(newArticles));
+          localStorage.setItem('upb_ppkpt_custom_edukasi', JSON.stringify(newArticles));
+        } catch (err) {
+          console.error('Gagal menyimpan:', err);
+        }
+      };
+
+      const showToast = (message, type = 'success') => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3500);
+      };
+
+      // Handler Simpan Konten (Tambah atau Edit)
+      const handleSaveArticle = (formData) => {
+        let updated;
+        const currentAuthor = {
+          name: authUser?.name || 'Admin Satgas PPKPT',
+          role: authUser?.role || 'Pengelola',
+          category: authUser?.category || '',
+          email: authUser?.email || ''
+        };
+
+        if (editingArticle) {
+          // Edit: pertahankan pembuat awal, catat penyunting terakhir
+          updated = articles.map(item => item.id === editingArticle.id ? { 
+            ...formData, 
+            id: editingArticle.id,
+            author: item.author || currentAuthor,
+            lastEditedBy: currentAuthor
+          } : item);
+          showToast('Konten berhasil diperbarui!');
+        } else {
+          // Tambah Baru dengan identitas pengunggah aktif
+          const newItem = {
+            ...formData,
+            id: 'edu-' + Date.now(),
+            author: currentAuthor
+          };
+          updated = [newItem, ...articles];
+          showToast('Konten berhasil diterbitkan!');
+        }
+
+        setArticles(updated);
+        saveToStorage(updated);
+        setIsFormModalOpen(false);
+        setEditingArticle(null);
+      };
+
+      // Handler Hapus Konten
+      const handleDeleteArticle = () => {
+        if (!deleteTarget) return;
+        const updated = articles.filter(item => item.id !== deleteTarget.id);
+        setArticles(updated);
+        saveToStorage(updated);
+        setDeleteTarget(null);
+        showToast('Konten berhasil dihapus!', 'info');
+      };
+
+      // Filtered Articles
+      const filteredArticles = useMemo(() => {
+        return articles.filter(item => {
+          const matchesSearch = searchQuery === '' || 
+            (item.title || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (item.summary || '').toLowerCase().includes(searchQuery.toLowerCase());
+          const matchesCategory = categoryFilter === 'ALL' || item.category === categoryFilter;
+          const matchesType = typeFilter === 'ALL' || (item.contentType || 'text') === typeFilter;
+          return matchesSearch && matchesCategory && matchesType;
+        });
+      }, [articles, searchQuery, categoryFilter, typeFilter]);
+
+      // Route Guard View: Tampilkan Login jika belum terautentikasi
+      if (!authUser) {
+        return (
+          <>
+            <LoginPage onLoginSuccess={handleLoginSuccess} />
+            {toast && (
+              <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-sage-900 text-white text-xs font-bold shadow-xl border border-sage-700 animate-slideUp">
+                <span>{toast.type === 'info' ? 'ℹ️' : '✅'}</span>
+                <span>{toast.message}</span>
+              </div>
+            )}
+          </>
+        );
+      }
+
+      return (
+        <div className="flex h-screen overflow-hidden bg-sage-50">
+
+          {/* Mobile Overlay */}
+          {isMobileSidebarOpen && (
+            <div 
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-xs z-30 lg:hidden"
+            />
+          )}
+
+          {/* =================================================================
+               SIDEBAR (MENU BAHASA INDONESIA RAMAH PENGGUNA)
+               ================================================================= */}
+          <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-sage-200 flex flex-col justify-between transition-transform duration-300 ${
+            isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}>
+            <div className="p-5 space-y-6">
+              
+              {/* Brand Satgas Pelita Bangsa */}
+              <div className="flex items-center gap-3 pb-2 border-b border-sage-100">
+                <img src="assets/images/logo.jpg" alt="Logo" className="w-9 h-9 rounded-xl object-contain border border-sage-200" />
+                <div>
+                  <h1 className="font-extrabold text-sm text-sage-900 leading-tight">SATGAS PPKPT</h1>
+                  <span className="text-[11px] text-gray-500">Universitas Pelita Bangsa</span>
+                </div>
+              </div>
+
+              {/* Nav Menu Sederhana */}
+              <nav className="space-y-1.5">
+                <button
+                  type="button"
+                  onClick={() => changeTab('beranda')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left ${
+                    activeTab === 'beranda'
+                      ? 'bg-sage-100 text-sage-900 border border-sage-300'
+                      : 'text-gray-600 hover:bg-sage-50 border border-transparent'
+                  }`}
+                >
+                  <span className="text-base">🏠</span>
+                  <span>Beranda</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => changeTab('edukasi')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left ${
+                    activeTab === 'edukasi'
+                      ? 'bg-sage-100 text-sage-900 border border-sage-300'
+                      : 'text-gray-600 hover:bg-sage-50 border border-transparent'
+                  }`}
+                >
+                  <span className="text-base">📚</span>
+                  <span>Kelola Edukasi &amp; Kegiatan</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => changeTab('pengaturan')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left ${
+                    activeTab === 'pengaturan'
+                      ? 'bg-sage-100 text-sage-900 border border-sage-300'
+                      : 'text-gray-600 hover:bg-sage-50 border border-transparent'
+                  }`}
+                >
+                  <span className="text-base">⚙️</span>
+                  <span>Pengaturan</span>
+                </button>
+              </nav>
+
+            </div>
+
+            {/* Profile Ringkas & Tombol Keluar di Bawah Sidebar */}
+            <div className="p-4 border-t border-sage-200 bg-sage-50/50 flex items-center justify-between">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-sage-700 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  {authUser?.avatarInitials || 'AD'}
+                </div>
+                <div className="min-w-0">
+                  <span className="block text-xs font-bold text-sage-900 truncate">{authUser?.name || 'Admin Satgas'}</span>
+                  <span className="block text-[10px] text-gray-500 truncate">{authUser?.role || 'Staf Pengelola'}</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                title="Keluar dari sistem"
+                className="px-2.5 py-1 rounded-lg text-xs font-bold text-red-600 hover:bg-red-50 hover:text-red-700 border border-red-200 transition-colors flex-shrink-0"
+              >
+                Keluar
+              </button>
+            </div>
+          </aside>
+
+          {/* =================================================================
+               MAIN CONTENT CANVAS
+               ================================================================= */}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            
+            {/* Top Navbar */}
+            <header className="h-16 bg-white/95 backdrop-blur-sm border-b border-sage-200 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsMobileSidebarOpen(true)}
+                  className="lg:hidden p-2 rounded-xl text-sage-800 hover:bg-sage-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <a
+                  href="index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sage-100 hover:bg-sage-200 text-sage-900 text-xs font-bold border border-sage-300 transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Lihat Website</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  title="Keluar dari sesi admin"
+                  className="px-3.5 py-1.5 rounded-xl border border-red-200 bg-white hover:bg-red-50 text-red-600 text-xs font-bold transition-colors"
+                >
+                  Keluar
+                </button>
+              </div>
+            </header>
+
+            {/* Main Scroll Area */}
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+              {/* 1. TAB: BERANDA */}
+              {activeTab === 'beranda' && (
+                <div className="space-y-6 max-w-6xl mx-auto">
+                  
+                  {/* Welcome Banner */}
+                  <div className="sage-card p-6 sm:p-8 rounded-3xl bg-white border border-sage-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="space-y-1.5 max-w-xl">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-sage-100 text-sage-800 border border-sage-300 inline-block">
+                        Panel Pengelola Edukasi
+                      </span>
+                      <h2 className="text-xl sm:text-2xl font-extrabold text-sage-900 tracking-tight">
+                        Selamat Datang di Pengelola Konten
+                      </h2>
+                      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Kelola artikel panduan, video YouTube, dan postingan edukasi kampus dengan mudah tanpa perlu memahami kode pemrograman.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 4 Kartu Statistik */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="sage-card p-5 rounded-2xl bg-white border border-sage-200">
+                      <span className="text-xs font-bold text-gray-400 block mb-1">TOTAL KONTEN</span>
+                      <div className="text-2xl sm:text-3xl font-extrabold text-sage-900">{articles.length}</div>
+                      <span className="text-[11px] text-gray-500 mt-1 block">Materi terpublikasi</span>
+                    </div>
+
+                    <div className="sage-card p-5 rounded-2xl bg-white border border-sage-200">
+                      <span className="text-xs font-bold text-gray-400 block mb-1">ARTIKEL TEKS</span>
+                      <div className="text-2xl sm:text-3xl font-extrabold text-sage-800">
+                        {articles.filter(a => (a.contentType || 'text') === 'text').length}
+                      </div>
+                      <span className="text-[11px] text-gray-500 mt-1 block">📝 Bacaan panduan</span>
+                    </div>
+
+                    <div className="sage-card p-5 rounded-2xl bg-white border border-sage-200">
+                      <span className="text-xs font-bold text-red-500 block mb-1">VIDEO YOUTUBE</span>
+                      <div className="text-2xl sm:text-3xl font-extrabold text-red-600">
+                        {articles.filter(a => a.contentType === 'youtube').length}
+                      </div>
+                      <span className="text-[11px] text-gray-500 mt-1 block">🎥 Media interaktif</span>
+                    </div>
+
+                    <div className="sage-card p-5 rounded-2xl bg-white border border-sage-200">
+                      <span className="text-xs font-bold text-pink-500 block mb-1">POSTINGAN INSTAGRAM</span>
+                      <div className="text-2xl sm:text-3xl font-extrabold text-pink-600">
+                        {articles.filter(a => a.contentType === 'instagram').length}
+                      </div>
+                      <span className="text-[11px] text-gray-500 mt-1 block">📸 Media sosial</span>
+                    </div>
+                  </div>
+
+                  {/* Ringkasan Konten Terbaru */}
+                  <div className="sage-card p-6 rounded-3xl bg-white border border-sage-200 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-base font-bold text-sage-900">Konten Paling Baru</h3>
+                        <p className="text-xs text-gray-500">Materi terbaru yang otomatis tayang di halaman depan website.</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('edukasi')}
+                        className="text-xs font-bold text-sage-700 hover:text-sage-900"
+                      >
+                        Lihat Seluruh Konten →
+                      </button>
+                    </div>
+
+                    <div className="divide-y divide-gray-100">
+                      {articles.slice(0, 4).map(item => {
+                        const cat = CATEGORIES[item.category] || CATEGORIES['Kekerasan Seksual'];
+                        return (
+                          <div key={item.id} className="py-3.5 flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3 min-w-0">
+                              {item.contentType === 'youtube' && extractYouTubeId(item.mediaUrl) ? (
+                                <img
+                                  src={`https://img.youtube.com/vi/${extractYouTubeId(item.mediaUrl)}/hqdefault.jpg`}
+                                  alt="Thumbnail"
+                                  className="w-12 h-8 rounded-lg object-cover border border-sage-200 flex-shrink-0"
+                                />
+                              ) : item.contentType === 'instagram' ? (
+                                <div className="w-9 h-8 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white text-xs flex-shrink-0 shadow-2xs">
+                                  📸
+                                </div>
+                              ) : (
+                                <span className="text-xl flex-shrink-0">📝</span>
+                              )}
+                              <div className="min-w-0">
+                                <h4 className="text-xs sm:text-sm font-bold text-sage-900 truncate">{item.title}</h4>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${cat.badgeClass}`}>
+                                    {cat.label}
+                                  </span>
+                                  <span className="text-[11px] text-gray-400">{item.date}</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => { setEditingArticle(item); setIsFormModalOpen(true); }}
+                              className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-bold text-gray-700 hover:bg-sage-50 whitespace-nowrap"
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        );
+                      })}
+                      {articles.length === 0 && (
+                        <div className="py-8 text-center text-xs text-gray-400">
+                          Belum ada konten materi. Klik "+ Tambah Konten Baru" untuk memulai.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {/* 2. TAB: KELOLA EDUKASI & KEGIATAN */}
+              {activeTab === 'edukasi' && (
+                <div className="space-y-5 max-w-6xl mx-auto">
+                  
+                  {/* Toolbar: Search, Filters & Action */}
+                  <div className="sage-card p-5 rounded-3xl bg-white border border-sage-200 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                    
+                    <div className="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                      {/* Input Pencarian */}
+                      <div className="relative flex-1">
+                        <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
+                          🔍
+                        </span>
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Cari judul materi..."
+                          className="w-full pl-8 pr-3 py-2 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-500 focus:ring-1 focus:ring-sage-500"
+                        />
+                      </div>
+
+                      {/* Filter Kategori */}
+                      <select
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                        className="px-3 py-2 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none bg-white focus:border-sage-500"
+                      >
+                        <option value="ALL">Semua Kategori</option>
+                        <option value="Kekerasan Seksual">⚠️ Kekerasan Seksual</option>
+                        <option value="Perundungan (Bullying)">🛑 Perundungan (Bullying)</option>
+                        <option value="Tindakan Intoleransi">⚖️ Tindakan Intoleransi</option>
+                        <option value="Kekerasan Fisik & Psikis">🛡️ Kekerasan Fisik &amp; Psikis</option>
+                      </select>
+
+                      {/* Filter Tipe Media */}
+                      <select
+                        value={typeFilter}
+                        onChange={(e) => setTypeFilter(e.target.value)}
+                        className="px-3 py-2 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none bg-white focus:border-sage-500"
+                      >
+                        <option value="ALL">Semua Tipe</option>
+                        <option value="text">📝 Artikel Teks</option>
+                        <option value="youtube">🎥 Video YouTube</option>
+                        <option value="instagram">📸 Postingan Instagram</option>
+                      </select>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => { setEditingArticle(null); setIsFormModalOpen(true); }}
+                      className="px-4 py-2 rounded-xl btn-action-red font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap"
+                    >
+                      <span>+</span>
+                      <span>Tambah Konten Baru</span>
+                    </button>
+                  </div>
+
+                  {/* DATA TABLE KONTEN */}
+                  <div className="sage-card rounded-3xl bg-white border border-sage-200 overflow-hidden shadow-sm">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-sage-50/70 border-b border-sage-200 text-[11px] font-extrabold uppercase tracking-wider text-sage-800">
+                            <th className="py-3.5 px-5">Judul Konten</th>
+                            <th className="py-3.5 px-4 whitespace-nowrap">Kategori</th>
+                            <th className="py-3.5 px-4 whitespace-nowrap">Tipe Konten</th>
+                            <th className="py-3.5 px-4 whitespace-nowrap">Diposting Oleh</th>
+                            <th className="py-3.5 px-4 whitespace-nowrap">Tanggal</th>
+                            <th className="py-3.5 px-5 text-right whitespace-nowrap">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100 text-xs">
+                          {filteredArticles.map(item => {
+                            const cat = CATEGORIES[item.category] || CATEGORIES['Kekerasan Seksual'];
+                            const isVideo = item.contentType === 'youtube';
+                            const isInsta = item.contentType === 'instagram';
+
+                            return (
+                              <tr key={item.id} className="hover:bg-sage-50/50 transition-colors">
+                                <td className="py-3.5 px-5">
+                                  <div className="flex items-center gap-3">
+                                    {isVideo && extractYouTubeId(item.mediaUrl) ? (
+                                      <img
+                                        src={`https://img.youtube.com/vi/${extractYouTubeId(item.mediaUrl)}/hqdefault.jpg`}
+                                        alt="Thumbnail"
+                                        className="w-12 h-8 rounded-lg object-cover border border-sage-200 flex-shrink-0"
+                                      />
+                                    ) : isInsta ? (
+                                      <div className="w-9 h-8 rounded-lg bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-600 flex-shrink-0 shadow-2xs">
+                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                      </div>
+                                    ) : (
+                                      <div className="w-8 h-8 rounded-lg bg-sage-100 text-sage-800 flex items-center justify-center text-xs flex-shrink-0 font-bold">
+                                        <svg className="w-4 h-4 stroke-sage-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                      </div>
+                                    )}
+                                    <div className="min-w-0">
+                                      <div className="font-bold text-sage-900 text-xs sm:text-sm leading-snug">
+                                        {item.title}
+                                      </div>
+                                      <div className="text-[11px] text-gray-500 truncate max-w-xs sm:max-w-md mt-0.5">
+                                        {item.summary || (item.content ? item.content.slice(0, 90) + '...' : '-')}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="py-3.5 px-4 whitespace-nowrap">
+                                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${cat.badgeClass}`}>
+                                    <span className={`w-1.5 h-1.5 rounded-full ${cat.dotClass}`}></span>
+                                    {cat.label}
+                                  </span>
+                                </td>
+                                <td className="py-3.5 px-4 whitespace-nowrap">
+                                  {isVideo && (
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-red-700 border border-red-200">
+                                      <svg className="w-3.5 h-3.5 fill-red-600" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                      <span>YouTube</span>
+                                    </span>
+                                  )}
+                                  {isInsta && (
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-pink-50 text-pink-700 border border-pink-200">
+                                      <svg className="w-3.5 h-3.5 fill-pink-600" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                      <span>Instagram</span>
+                                    </span>
+                                  )}
+                                  {!isVideo && !isInsta && (
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sage-100 text-sage-800 border border-sage-200">
+                                      <svg className="w-3.5 h-3.5 stroke-sage-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                      <span>Artikel Teks</span>
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-3.5 px-4 whitespace-nowrap">
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-lg bg-sage-700 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                                      {item.author?.name ? item.author.name.split(' ').map(n=>n[0]).slice(0,2).join('') : 'ST'}
+                                    </div>
+                                    <div className="min-w-0">
+                                      <div className="font-bold text-sage-900 text-xs truncate max-w-[160px]">
+                                        {item.author?.name || 'Admin Satgas'}
+                                      </div>
+                                      <div className="text-[10px] text-gray-500 truncate max-w-[160px]">
+                                        {item.author?.role || 'Staf Satgas'} {item.author?.category ? `(${item.author.category})` : ''}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="py-3.5 px-4 whitespace-nowrap text-gray-500 font-medium">
+                                  {item.date}
+                                </td>
+                                <td className="py-3.5 px-5 text-right whitespace-nowrap">
+                                  <div className="flex items-center justify-end gap-1.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => { setEditingArticle(item); setIsFormModalOpen(true); }}
+                                      className="px-2.5 py-1 rounded-lg border border-gray-200 hover:bg-sage-100 text-sage-800 font-bold text-xs"
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setDeleteTarget(item)}
+                                      className="px-2.5 py-1 rounded-lg border border-red-200 hover:bg-red-50 text-red-600 font-bold text-xs"
+                                    >
+                                      Hapus
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+
+                          {filteredArticles.length === 0 && (
+                            <tr>
+                              <td colSpan="6" className="py-10 text-center text-xs text-gray-400">
+                                Tidak ada konten yang sesuai dengan filter pencarian.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {/* 3. TAB: PENGATURAN */}
+              {activeTab === 'pengaturan' && (
+                <div className="max-w-3xl mx-auto space-y-6">
+                  
+                  {/* Kartu Profil Sesi Staf Aktif */}
+                  <div className="sage-card p-6 sm:p-8 rounded-3xl bg-white border border-sage-200 shadow-sm space-y-5">
+                    <div className="pb-3 border-b border-sage-100">
+                      <div>
+                        <h2 className="text-xl font-extrabold text-sage-900">Akun Pengelola Aktif</h2>
+                        <p className="text-xs text-gray-500 mt-0.5">Informasi sesi akun staf yang sedang bertugas saat ini.</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                      <div className="p-4 bg-sage-50/70 rounded-2xl border border-sage-200">
+                        <span className="text-gray-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Nama Petugas</span>
+                        <strong className="text-sage-900 font-bold text-sm block">{authUser?.name || 'Admin Satgas'}</strong>
+                        <span className="text-gray-500 text-[11px] mt-0.5 block">{authUser?.role || 'Staf Pengelola Konten'} {authUser?.category ? `• ${authUser.category}` : ''}</span>
+                      </div>
+                      <div className="p-4 bg-sage-50/70 rounded-2xl border border-sage-200">
+                        <span className="text-gray-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Email Resmi Terdaftar</span>
+                        <strong className="text-sage-900 font-bold text-sm font-mono block truncate">{authUser?.email || '-'}</strong>
+                        <span className="text-gray-500 text-[11px] mt-0.5 block">Identitas: {authUser?.idNumber || 'Sistem Terotentikasi'}</span>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                  {/* Kartu Panduan Staf */}
+                  <div className="sage-card p-6 sm:p-8 rounded-3xl bg-white border border-sage-200 shadow-sm space-y-4">
+                    <div>
+                      <h2 className="text-xl font-extrabold text-sage-900">Panduan Operasional</h2>
+                      <p className="text-xs text-gray-500 mt-0.5">Petunjuk praktis untuk staf pengelola ruang aman kampus.</p>
+                    </div>
+
+                    <div className="space-y-3 pt-2 text-xs">
+                      <div className="p-4 bg-sage-50 rounded-2xl border border-sage-200">
+                        <strong className="block text-sage-900 mb-1">Pedoman Penerbitan Materi:</strong>
+                        <ul className="list-disc pl-5 space-y-1.5 text-gray-700">
+                          <li>Seluruh materi yang disimpan di dashboard ini akan <strong>langsung tampil seketika</strong> pada website utama tanpa perlu build atau deploy ulang.</li>
+                          <li>Untuk video YouTube atau postingan Instagram, cukup salin link URL dari browser/aplikasi dan tempelkan pada kolom yang disediakan. Sistem akan otomatis menampilkan pratinjau langsung.</li>
+                          <li>Akun sistem ini bersifat tertutup (hanya dapat dibuat oleh Administrator TI) demi menjaga kerahasiaan dan integritas informasi Satgas PPKPT Pelita Bangsa.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </main>
+          </div>
+
+          {/* =================================================================
+               MODAL: TAMBAH / EDIT KONTEN (SMART MEDIA INTEGRATION)
+               ================================================================= */}
+          {isFormModalOpen && (
+            <ContentFormModal
+              initialData={editingArticle}
+              authUser={authUser}
+              onClose={() => { setIsFormModalOpen(false); setEditingArticle(null); }}
+              onSave={handleSaveArticle}
+            />
+          )}
+
+          {/* =================================================================
+               MODAL: KONFIRMASI HAPUS
+               ================================================================= */}
+          {deleteTarget && (
+            <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+              <div className="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-sage-200">
+                <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-xl mx-auto">
+                  🗑️
+                </div>
+                <div>
+                  <h3 className="text-base font-extrabold text-sage-900">Hapus Konten Ini?</h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    "{deleteTarget.title}" akan dihapus dari website.
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setDeleteTarget(null)}
+                    className="px-4 py-2 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-50"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDeleteArticle}
+                    className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-sm"
+                  >
+                    Ya, Hapus
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =================================================================
+               TOAST NOTIFICATION
+               ================================================================= */}
+          {toast && (
+            <div className="fixed top-5 right-5 z-50 bg-sage-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-bold border border-sage-700">
+              <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">✓</span>
+              <span>{toast.message}</span>
+            </div>
+          )}
+
+        </div>
+      );
+    }
+
+    // Modal Form Component with Smart Media Integration (NO IFRAME CODE REQUIRED)
+    function ContentFormModal({ initialData, authUser, onClose, onSave }) {
+      const [title, setTitle] = useState(initialData?.title || '');
+      const [category, setCategory] = useState(initialData?.category || 'Kekerasan Seksual');
+      const [contentType, setContentType] = useState(initialData?.contentType || 'text');
+      const [mediaUrl, setMediaUrl] = useState(initialData?.mediaUrl || '');
+      const [summary, setSummary] = useState(initialData?.summary || '');
+      const [content, setContent] = useState(initialData?.content || '');
+      const [date, setDate] = useState(initialData?.date || new Date().toISOString().split('T')[0]);
+      const textareaRef = useRef(null);
+
+      // Smart Parsing untuk Live Preview
+      const youtubeId = useMemo(() => {
+        if (contentType !== 'youtube') return null;
+        return extractYouTubeId(mediaUrl);
+      }, [contentType, mediaUrl]);
+
+      const instagramEmbedUrl = useMemo(() => {
+        if (contentType !== 'instagram') return null;
+        return extractInstagramEmbed(mediaUrl);
+      }, [contentType, mediaUrl]);
+
+      // WYSIWYG Formatter Helper untuk Artikel Teks
+      const applyFormatting = (type) => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = content.substring(start, end) || 'Teks yang dipilih';
+        let replacement = '';
+
+        if (type === 'bold') replacement = `**${selectedText}**`;
+        else if (type === 'italic') replacement = `*${selectedText}*`;
+        else if (type === 'heading') replacement = `\n\n📌 ${selectedText}\n`;
+        else if (type === 'bullet') replacement = `\n- ${selectedText}`;
+        else if (type === 'numbered') replacement = `\n1. ${selectedText}`;
+        else if (type === 'quote') replacement = `\n> ${selectedText}\n`;
+
+        const newText = content.substring(0, start) + replacement + content.substring(end);
+        setContent(newText);
+        setTimeout(() => {
+          textarea.focus();
+          textarea.setSelectionRange(start + replacement.length, start + replacement.length);
+        }, 50);
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!title.trim()) {
+          alert('Judul konten wajib diisi!');
+          return;
+        }
+
+        onSave({
+          title,
+          category,
+          contentType,
+          mediaUrl: (contentType === 'youtube' || contentType === 'instagram') ? mediaUrl.trim() : '',
+          summary,
+          content,
+          date,
+          icon: contentType === 'youtube' ? '🎥' : contentType === 'instagram' ? '📸' : '📝',
+          author: initialData?.author || {
+            name: authUser?.name || 'Admin Satgas PPKPT',
+            role: authUser?.role || 'Pengelola',
+            category: authUser?.category || '',
+            email: authUser?.email || ''
+          }
+        });
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+          {/* Box Modal */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-3xl max-w-2xl w-full my-auto flex flex-col shadow-2xl border border-sage-200 overflow-hidden max-h-[92vh]"
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-sage-100 flex items-center justify-between bg-sage-50/60 flex-shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-sage-100 text-sage-800 flex items-center justify-center text-sm font-bold">
+                  {initialData ? '✏️' : '➕'}
+                </span>
+                <div>
+                  <h3 className="text-base font-extrabold text-sage-900">
+                    {initialData ? 'Edit Konten' : 'Tambah Konten Baru'}
+                  </h3>
+                  <span className="text-[11px] text-gray-500">Isi formulir dengan mudah tanpa kode teknis.</span>
+                </div>
+              </div>
+              
+              {/* Tombol Tutup Eksplisit */}
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-8 h-8 rounded-xl hover:bg-gray-200/80 flex items-center justify-center text-gray-500 font-bold text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Form Body */}
+            <form id="content-form" onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5">
+
+              {/* Info Penulis / Akun Pengunggah */}
+              <div className="p-3 bg-sage-50/80 rounded-2xl border border-sage-200/80 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-7 h-7 rounded-lg bg-sage-700 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                    {authUser?.avatarInitials || 'ST'}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] text-gray-500 block">Diterbitkan oleh:</span>
+                    <strong className="text-sage-900 font-bold block truncate">{authUser?.name || 'Admin Satgas PPKPT'}</strong>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold text-sage-800 bg-white px-2.5 py-1 rounded-xl border border-sage-200 shadow-2xs whitespace-nowrap">
+                  {authUser?.role || 'Pengelola'} {authUser?.category ? `(${authUser.category})` : ''}
+                </span>
+              </div>
+
+              {/* 1. Tipe Konten Selector (Segmented Radio Pills) */}
+              <div>
+                <label className="block text-xs font-bold text-sage-900 mb-2">
+                  Pilih Format Konten yang Ingin Dipublikasikan:
+                </label>
+                <div className="grid grid-cols-3 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setContentType('text')}
+                    className={`py-3 px-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
+                      contentType === 'text'
+                        ? 'bg-sage-100 border-sage-500 text-sage-900 shadow-xs'
+                        : 'bg-gray-50/80 border-gray-200 text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>Artikel Teks</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setContentType('youtube')}
+                    className={`py-3 px-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
+                      contentType === 'youtube'
+                        ? 'bg-red-50 border-red-400 text-red-900 shadow-xs'
+                        : 'bg-gray-50/80 border-gray-200 text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    <svg className="w-5 h-5 fill-red-600" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    <span>Video YouTube</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setContentType('instagram')}
+                    className={`py-3 px-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
+                      contentType === 'instagram'
+                        ? 'bg-pink-50 border-pink-400 text-pink-900 shadow-xs'
+                        : 'bg-gray-50/80 border-gray-200 text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    <svg className="w-5 h-5 fill-pink-600" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <span>Instagram</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 2. Judul Konten */}
+              <div>
+                <label className="block text-xs font-bold text-sage-900 mb-1">
+                  Judul Konten <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Contoh: Sosialisasi Pencegahan Perundungan di Kampus"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-500 focus:ring-1 focus:ring-sage-500"
+                />
+              </div>
+
+              {/* 3. Kategori & Tanggal */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-sage-900 mb-1">
+                    Kategori Kekerasan <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none bg-white focus:border-sage-500"
+                  >
+                    <option value="Kekerasan Seksual">⚠️ Kekerasan Seksual</option>
+                    <option value="Perundungan (Bullying)">🛑 Perundungan (Bullying)</option>
+                    <option value="Tindakan Intoleransi">⚖️ Tindakan Intoleransi</option>
+                    <option value="Kekerasan Fisik & Psikis">🛡️ Kekerasan Fisik &amp; Psikis</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-sage-900 mb-1">
+                    Tanggal Terbit
+                  </label>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-500"
+                  />
+                </div>
+              </div>
+
+              {/* 4. INTEGRASI MEDIA PINTAR (YouTube / Instagram) */}
+              {(contentType === 'youtube' || contentType === 'instagram') && (
+                <div className="p-4 bg-gray-50 rounded-2xl border border-sage-200 space-y-3">
+                  <div>
+                    <label className="block text-xs font-bold text-sage-900 mb-1">
+                      {contentType === 'youtube' ? '🎥 Masukkan Link / URL Video YouTube:' : '📸 Masukkan Link / URL Postingan Instagram:'}
+                    </label>
+                    <input
+                      type="url"
+                      required
+                      value={mediaUrl}
+                      onChange={(e) => setMediaUrl(e.target.value)}
+                      placeholder={
+                        contentType === 'youtube'
+                          ? 'Contoh: https://www.youtube.com/watch?v=... atau https://youtu.be/...'
+                          : 'Contoh: https://www.instagram.com/p/... atau https://www.instagram.com/reel/...'
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-xs text-sage-900 outline-none bg-white focus:border-sage-500"
+                    />
+                    <p className="text-[11px] text-gray-500 mt-1">
+                      💡 Cukup tempelkan link URL biasa. Sistem kami akan otomatis mengubahnya menjadi tampilan video/postingan langsung.
+                    </p>
+                  </div>
+
+                  {/* LIVE PREVIEW YOUTUBE (SESUAI RASIO 16:9 ATAU SHORTS 9:16) */}
+                  {contentType === 'youtube' && (
+                    <div>
+                      {youtubeId ? (
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[11px] font-bold text-green-700 flex items-center gap-1">
+                              ✓ Video Berhasil Ditemukan:
+                            </span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 border border-red-200">
+                              {mediaUrl.includes('/shorts/') ? 'Rasio Vertikal Shorts 9:16' : 'Rasio Lebar Standar 16:9'}
+                            </span>
+                          </div>
+                          <div className={`rounded-xl overflow-hidden border border-gray-200 bg-black ${
+                            mediaUrl.includes('/shorts/') ? 'aspect-[9/16] max-w-xs mx-auto' : 'aspect-video w-full'
+                          }`}>
+                            <iframe
+                              src={`https://www.youtube.com/embed/${youtubeId}`}
+                              className="w-full h-full"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      ) : mediaUrl ? (
+                        <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-800">
+                          ⚠️ Link YouTube belum valid. Pastikan link diawali dengan https://youtube.com/watch?v=... atau https://youtu.be/...
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+
+                  {/* LIVE PREVIEW INSTAGRAM (SESUAI RASIO PORTRAIT 4:5) */}
+                  {contentType === 'instagram' && (
+                    <div>
+                      {instagramEmbedUrl ? (
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[11px] font-bold text-green-700 flex items-center gap-1">
+                              ✓ Postingan Berhasil Ditemukan:
+                            </span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-100 text-pink-800 border border-pink-200">
+                              Rasio Asli Instagram 4:5
+                            </span>
+                          </div>
+                          <div className="flex justify-center bg-white p-2 rounded-xl border border-gray-200 overflow-hidden">
+                            <iframe
+                              src={instagramEmbedUrl}
+                              className="w-full max-w-sm aspect-[4/5] min-h-[460px] rounded-lg"
+                              frameBorder="0"
+                              scrolling="no"
+                              allowTransparency="true"
+                            />
+                          </div>
+                        </div>
+                      ) : mediaUrl ? (
+                        <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-800">
+                          ⚠️ Link Instagram belum valid. Pastikan link postingan diawali dengan https://www.instagram.com/p/...
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 5. Ringkasan Singkat */}
+              <div>
+                <label className="block text-xs font-bold text-sage-900 mb-1">
+                  Ringkasan Singkat (Muncul di Kartu Tampilan Depan)
+                </label>
+                <textarea
+                  rows="2"
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                  placeholder="Tuliskan ringkasan 1-2 kalimat seputar materi ini..."
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-500"
+                />
+              </div>
+
+              {/* 6. WYSIWYG Rich Text Editor (Khusus Artikel Teks) */}
+              {contentType === 'text' && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-bold text-sage-900">
+                      Isi Lengkap Artikel
+                    </label>
+                    <span className="text-[11px] text-gray-400">Gunakan tombol pemformat di bawah untuk merapikan teks</span>
+                  </div>
+
+                  {/* Toolbar Pemformatan Sederhana (WYSIWYG Buttons) */}
+                  <div className="flex items-center flex-wrap gap-1 p-1.5 bg-sage-50 rounded-xl border border-sage-200">
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('bold')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs font-bold text-sage-900 hover:bg-sage-100"
+                      title="Teks Tebal"
+                    >
+                      B Tebal
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('italic')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs italic text-sage-900 hover:bg-sage-100"
+                      title="Teks Miring"
+                    >
+                      I Miring
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('heading')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs font-bold text-sage-900 hover:bg-sage-100"
+                      title="Judul Sub-Bab"
+                    >
+                      📌 Sub-Judul
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('bullet')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs font-bold text-sage-900 hover:bg-sage-100"
+                      title="Daftar Titik"
+                    >
+                      • Poin
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('numbered')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs font-bold text-sage-900 hover:bg-sage-100"
+                      title="Daftar Nomor"
+                    >
+                      1. Angka
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => applyFormatting('quote')}
+                      className="px-2.5 py-1 rounded-lg bg-white border border-sage-200 text-xs font-bold text-sage-900 hover:bg-sage-100"
+                      title="Kotak Catatan Penting"
+                    >
+                      ❝ Catatan
+                    </button>
+                  </div>
+
+                  <textarea
+                    ref={textareaRef}
+                    rows="6"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Ketik isi artikel atau materi edukasi Anda di sini..."
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs text-sage-900 outline-none focus:border-sage-500 leading-relaxed font-sans"
+                  />
+                </div>
+              )}
+
+            </form>
+
+            {/* Modal Footer (Tombol Simpan dalam Warna Sage Green & Batal) */}
+            <div className="px-6 py-4 border-t border-sage-100 bg-gray-50 flex items-center justify-between gap-3 flex-shrink-0">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 rounded-xl border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs transition-colors"
+              >
+                Batal
+              </button>
+
+              <button
+                type="submit"
+                form="content-form"
+                className="px-6 py-2.5 rounded-xl bg-sage-700 hover:bg-sage-800 text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1.5"
+              >
+                <span>💾</span>
+                <span>Simpan</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+    // Mount React App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

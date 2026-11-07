@@ -1,0 +1,23 @@
+{
+  "name": "website-satgas-ppkpt-upb",
+  "version": "1.0.0",
+  "description": "Website Resmi dan Admin CMS Satgas PPKPT Universitas Pelita Bangsa",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "serve": "node server.js",
+    "push": "git add . && git commit -m \"update website otomatis\" && git push",
+    "deploy": "git add . && git commit -m \"deploy perubahan\" && git push"
+  },
+  "keywords": [
+    "satgas-ppkpt",
+    "pelita-bangsa",
+    "admin-dashboard",
+    "cms"
+  ],
+  "author": "Satgas PPKPT Universitas Pelita Bangsa",
+  "license": "ISC"
+}
+

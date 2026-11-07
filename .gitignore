@@ -1,0 +1,49 @@
+# =============================================================================
+# SATGAS PPKPT UNIVERSITAS PELITA BANGSA - GITIGNORE
+# Proteksi data sensitif, kredensial, dan file rahasia sebelum push ke GitHub
+# =============================================================================
+
+# 1. Dokumen Berkas Rahasia & Kredensial Asli
+daftar akun.xlsx
+daftar akun*.xlsx
+daftar akun*.xls
+*.xlsx
+*.xls
+daftar_akun.json
+accounts.json
+
+# 2. File Lingkungan & Kunci Rahasia
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 3. Node.js & Package Managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 4. Log Sistem & Debugging
+*.log
+logs/
+
+# 5. File Sistem Operasi (Windows & macOS)
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 6. Editor & IDE Cache
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+

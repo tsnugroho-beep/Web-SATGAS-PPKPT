@@ -1,0 +1,11 @@
+# PANDUAN FORMAT DAFTAR AKUN PENGELOLA SATGAS PPKPT
+# CATATAN: File asli "daftar akun.xlsx" telah diproteksi di .gitignore dan TIDAK AKAN diunggah ke GitHub.
+
+Struktur kolom file Excel resmi:
+1. email          : Email resmi sivitas (contoh: nama@pelitabangsa.ac.id)
+2. Password       : Kata sandi login pengelola
+3. nama_lengkap   : Nama lengkap beserta gelar akademik
+4. jabatan        : Jabatan Satgas (Ketua, Sekretaris, atau Anggota)
+5. jenis_anggota  : Kategori sivitas (Dosen, Tendik, atau Mahasiswa)
+6. NUPTK/NIM/NIP  : Nomor identitas kepegawaian atau kemahasiswaan
+
